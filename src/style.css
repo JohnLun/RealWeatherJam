@@ -46,7 +46,8 @@
   margin: 0;
   padding: 0;
   position: absolute;
-  background-color: white;
+  /*background-color: white; ## Margaret Review: removed this to be more consistent with the other divs havign no backgrounds*/ 
+  /* Or add backgrounds/effects to all containers */
   border: 1px solid #ddd;
   width: 100%;
   max-height: 200px;
@@ -61,8 +62,11 @@
 }
 
 .recent-searches li:hover {
-  background-color: #f0f0f0;
+  font-weight: bold; /* ## Marg Review ## Make the text bold on hover instead of change background color */
+  cursor: pointer;
 }
+
+
 
 .search {
   position: relative; /* To position the dropdown correctly */

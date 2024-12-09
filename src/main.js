@@ -109,6 +109,7 @@ function isDaytime(time) {
  }
 
  // Function to determine the background gradient based on temperature and time of day
+ // ## Margaret Review ## Maybe make letters white when gradient is on the cooler/darker side
  function getBackgroundGradient(tempF, isDay) {
   if (isDay) {
     if (tempF <= 32) { // Cold day: <= 32°F (Freezing point)
@@ -133,6 +134,7 @@ function isDaytime(time) {
   }
 }
 
+// ## Margaret Review ## Possibly add enter key functionlity to city search
 const recentSearches = new Set();
 document.getElementById('searchButton').addEventListener('click', async function() {
     let input = document.getElementById('input');
@@ -203,7 +205,8 @@ function updateRecentSearches() {
   recentSearches.forEach(city => {
     const listItem = document.createElement('li');
     listItem.textContent = city;
-    recentSearchList.appendChild(listItem);
+    recentSearchList.appendChild(listItem); // ## Margaret Review ## Possibly add most 
+                                          // recent search at the beggining of the list and add a cap as to how many searches are stored
   });
 
   // Show the dropdown if there are recent searches
@@ -231,6 +234,7 @@ function loadRecentSearchesFromLocalStorage() {
     updateRecentSearches();
   }
 }
+// ## Margaret Review ## Add a button or option to clear search history
 
 window.addEventListener('load', loadRecentSearchesFromLocalStorage);
 
