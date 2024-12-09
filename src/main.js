@@ -13,23 +13,62 @@ function formatTimeToAmPm(time) {
     return [`${hours}${suffix}`, date.getHours()];
 }
 
+function updateTemperatureRange(lowTemp, highTemp, minTemp = 0, maxTemp = 40) {
+  const rangeBar = document.querySelector('.range-bar');
+  const lowTempMarker = document.querySelector('.low-temp-marker');
+  const highTempMarker = document.querySelector('.high-temp-marker');
+  
+  // Normalize the temperatures to the bar scale (0 to 100%)
+  const lowPercent = ((lowTemp - minTemp) / (maxTemp - minTemp)) * 100;
+  const highPercent = ((highTemp - minTemp) / (maxTemp - minTemp)) * 100;
+
+  // Position the markers and update the bar
+  lowTempMarker.style.left = `${lowPercent}%`;
+  highTempMarker.style.left = `${highPercent}%`;
+
+  // Optionally update the temperature labels
+  document.getElementById('lowTemp').innerText = `Low: ${lowTemp}°C`;
+  document.getElementById('highTemp').innerText = `High: ${highTemp}°C`;
+}
+
+function findMinMaxTemp(fiveDayForecastMp) {
+  let min = Number.MAX_VALUE;
+  let max = Number.MIN_VALUE;
+  for (let day in fiveDayForecastMp) {
+    min = Math.min(min, fiveDayForecastMp[day][1]);
+    max = Math.max(max, fiveDayForecastMp[day][2]);
+  }
+  return [min, max]
+}
+
+
 function createFiveDayForecastCard(fiveDayForecastMp) {
     const fdContainer = document.getElementById('fd-container-id');
     fdContainer.innerHTML = ''; // Clear previous content if needed
+    let minMax = findMinMaxTemp(fiveDayForecastMp);
+    // Set up row content
+    const minTemp = minMax[0]; // Minimum temperature in your data range
+    const maxTemp = minMax[1];  // Maximum temperature in your data range
 
     for (const day in fiveDayForecastMp) {
         // Create a single row for each forecast
         const row = document.createElement('div');
         row.className = 'row fd-row'; // Custom CSS class for layout
-
-        // Set up row content
+        
+        
         row.innerHTML = `
             <div class="col">${fiveDayForecastMp[day][0]}</div>
             <div class="col">
                 <img src="${fiveDayForecastMp[day][3]}" alt="Weather icon" style="max-width: 50px;">
             </div>
-            <div class="col">Low: ${fiveDayForecastMp[day][1]}°</div>
-            <div class="col">High: ${fiveDayForecastMp[day][2]}°</div>
+            <div class="col">${fiveDayForecastMp[day][1]}°</div>
+            <div class="col temperature-range">
+                <div class="range-bar">
+                    <div class="low-temp-marker" style="left: ${((fiveDayForecastMp[day][1] - minTemp) / (maxTemp - minTemp)) * 100}%"></div>
+                    <div class="high-temp-marker" style="left: ${((fiveDayForecastMp[day][2] - minTemp) / (maxTemp - minTemp)) * 100}%"></div>
+                </div>
+            </div>
+            <div class="col">${fiveDayForecastMp[day][2]}°</div>
         `;
 
         // Append the row to the container

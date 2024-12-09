@@ -1,3 +1,46 @@
+.temperature-range {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.range-bar {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #00b0ff, #ff2a68); /* You can adjust the colors */
+  border-radius: 5px;
+}
+
+.low-temp-marker, .high-temp-marker {
+  position: absolute;
+  top: -5px; /* Position markers above the bar */
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 50%;
+  border: 2px solid #000;
+}
+
+.temp-labels {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.low-temp-marker {
+  left: 0%; /* Low temp at the start of the bar */
+}
+
+.high-temp-marker {
+  right: 0%; /* High temp at the end of the bar */
+}
+
 .recent-searches {
   list-style-type: none;
   margin: 0;
